@@ -5,5 +5,6 @@ src/vendor
 src/storage/framework/cache/**
 src/storage/framework/sessions/**
 src/storage/framework/views/**
+src/storage/api-docs/**
 src/.phpunit.result.cache
 src/.phpcs.cache
