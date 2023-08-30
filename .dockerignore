@@ -6,5 +6,6 @@ src/storage/framework/cache/**
 src/storage/framework/sessions/**
 src/storage/framework/views/**
 src/storage/api-docs/**
+src/storage/jwt-keys/**
 src/.phpunit.result.cache
 src/.phpcs.cache
