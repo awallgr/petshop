@@ -21,6 +21,8 @@ services:
             - ./src:/var/www/html
         networks:
             - laravel
+        profiles:
+            - app
 
     php_bu:
         build:
@@ -31,6 +33,8 @@ services:
             - ./src:/var/www/html
         networks:
             - laravel
+        profiles:
+            - app
 
     mysql_bu:
         image: mysql:8.0.27
@@ -46,6 +50,8 @@ services:
           MYSQL_PASSWORD: '${DB_PASSWORD}'
         networks:
             - laravel
+        profiles:
+            - app
 
     composer_bu:
         image: composer:latest
@@ -55,6 +61,8 @@ services:
         working_dir: /var/www/html
         networks:
             - laravel
+        profiles:
+            - misc
 
     artisan_bu:
         build:
@@ -67,6 +75,8 @@ services:
         entrypoint: ['php', 'artisan']
         networks:
             - laravel
+        profiles:
+            - misc
 
     npm_bu:
         image: node:current-alpine
@@ -77,6 +87,8 @@ services:
         entrypoint: ['npm']
         networks:
             - laravel
+        profiles:
+            - misc
 
 
 
