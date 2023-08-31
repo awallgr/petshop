@@ -21,6 +21,11 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
      *     description="Admin API endpoint"
      * )
      *
+     * @OA\Tag(
+     *     name="User",
+     *     description="User API endpoint"
+     * )
+     *
      * @OA\SecurityScheme(
      *      securityScheme="bearerAuth",
      *      in="header",
