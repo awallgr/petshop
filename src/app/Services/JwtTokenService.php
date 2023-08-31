@@ -24,38 +24,37 @@ use Carbon\Carbon;
 
 class JwtTokenService
 {
-    /**
-     * @param \Illuminate\Contracts\Auth\Authenticatable|null $user
-     * @param string $title
-     */
-    public function generateToken($user, $title): JwtToken
+    private ?Token $lastValidatedToken = null;
+
+    public function generateToken(?Authenticatable $user, string $title): JwtToken
     {
         $token = $this->buildToken($user);
         return $this->createAndSaveJwtToken($user, $title, $token);
     }
 
-    /**
-     * @param string $tokenString
-     */
-    public function validateToken($tokenString): bool
+    public function validateToken(string $tokenString): bool
     {
         try {
             $token = $this->parseToken($tokenString);
-            return $this->isValidToken($token, new Sha256());
+            return $this->performTokenValidation($token);
         } catch (\Exception $e) {
             return false;
         }
     }
 
+    public function getUserFromToken(Token $token): User|null
+    {
+        assert($token instanceof UnencryptedToken);
+        $userUuid = $token->claims()->get('user_uuid');
+        return User::where('uuid', '=', $userUuid)->first();
+    }
 
+    public function getLastValidatedToken(): Token|null
+    {
+        return $this->lastValidatedToken;
+    }
 
-
-
-
-    /**
-     * @param \Illuminate\Contracts\Auth\Authenticatable|null $user
-     */
-    private function buildToken($user): Token
+    private function buildToken(?Authenticatable $user): Token
     {
         $tokenBuilder = new Builder(new JoseEncoder(), ChainedFormatter::default());
         $privateKey = $this->getKey('private.pem');
@@ -84,48 +83,32 @@ class JwtTokenService
         return $jwtToken;
     }
 
-
-    /**
-     * @param string $tokenString
-     */
-    private function parseToken($tokenString): Token
+    private function parseToken(string $tokenString): Token
     {
         return (new Parser(new JoseEncoder()))->parse($this->validateNotEmpty($tokenString, 'Token cannot be empty.'));
     }
 
-    /**
-     * @param Token $token
-     * @param Sha256 $algorithm
-     */
-    private function isValidToken($token, $algorithm): bool
+    private function performTokenValidation(Token $token): bool
     {
-        $publicKey = $this->getKey('public.pem');
-        if (!$this->isTokenSignedWithAlgorithm($token, $algorithm, $publicKey)) {
-            return false;
-        }
-
-        if (!$this->isTokenIssuedByHost($token)) {
-            return false;
-        }
-
-        return $this->isUserAndTokenActive($token);
+        $this->lastValidatedToken = $token;
+        return $this->isValidToken($token, new Sha256());
     }
 
-    /**
-     * @param Token $token
-     * @param Sha256 $algorithm
-     * @param InMemory $publicKey
-     */
-    private function isTokenSignedWithAlgorithm($token, $algorithm, $publicKey): bool
+    private function isValidToken(Token $token, Sha256 $algorithm): bool
     {
+        return $this->isTokenSignedWithAlgorithm($token, $algorithm)
+            && $this->isTokenIssuedByHost($token)
+            && $this->isUserAndTokenActive($token);
+    }
+
+    private function isTokenSignedWithAlgorithm(Token $token, Sha256 $algorithm): bool
+    {
+        $publicKey = $this->getKey('public.pem');
         $validator = new JWTValidator();
         return $validator->validate($token, new SignedWith($algorithm, $publicKey));
     }
 
-    /**
-     * @param Token $token
-     */
-    private function isTokenIssuedByHost($token): bool
+    private function isTokenIssuedByHost(Token $token): bool
     {
         $validator = new JWTValidator();
         return $validator->validate(
@@ -134,29 +117,16 @@ class JwtTokenService
         );
     }
 
-    /**
-     * @param Token $token
-     */
-    private function isUserAndTokenActive($token): bool
+    private function isUserAndTokenActive(Token $token): bool
     {
         $user = $this->getUserFromToken($token);
         return $user && $this->isTokenActive($user);
     }
 
-    private function getUserFromToken(Token $token): User|null
-    {
-        assert($token instanceof UnencryptedToken);
-        $userUuid = $token->claims()->get('user_uuid');
-        return User::where('uuid', '=', $userUuid)->first();
-    }
-
     private function isTokenActive(User $user): bool
     {
         $jwtToken = $user->jwtToken;
-        if (!$jwtToken || ($jwtToken->expires_at && Carbon::parse($jwtToken->expires_at)->isPast())) {
-            return false;
-        }
-        return true;
+        return $jwtToken && ($jwtToken->expires_at && !Carbon::parse($jwtToken->expires_at)->isPast());
     }
 
 
@@ -167,16 +137,10 @@ class JwtTokenService
     }
 
     /**
-     * @param string $value
-     * @param string $errorMessage
-     *
      * @return non-empty-string
      */
-    private function validateNotEmpty($value, $errorMessage): string
+    private function validateNotEmpty(string $value, string $errorMessage): string
     {
-        if (empty($value)) {
-            throw new \InvalidArgumentException($errorMessage);
-        }
-        return $value;
+        return empty($value) ? throw new \InvalidArgumentException($errorMessage) : $value;
     }
 }
