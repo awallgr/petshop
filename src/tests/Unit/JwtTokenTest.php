@@ -58,4 +58,28 @@ class JwtTokenTest extends TestCase
         $this->assertTrue($token->token_data != "");
         $this->assertTrue($this->jwtTokenService->validateToken($token->token_data));
     }
+
+    public function testGetLastValidatedToken(): void
+    {
+        $publicKey = InMemory::file(storage_path('jwt-keys/public.pem'));
+        $algorithm = new Sha256();
+
+        $user = User::factory()->admin()->create();
+        $token = $this->jwtTokenService->generateToken($user, "Test token");
+        $this->jwtTokenService->validateToken($token->token_data);
+        $lastValidatedToken = $this->jwtTokenService->getLastValidatedToken();
+
+        $this->assertEquals($lastValidatedToken->toString(), $token->token_data);
+    }
+
+    public function testGetUserFromToken(): void
+    {
+        $user = User::factory()->admin()->create();
+        $token = $this->jwtTokenService->generateToken($user, "Test token");
+        $this->jwtTokenService->validateToken($token->token_data);
+        $lastValidatedToken = $this->jwtTokenService->getLastValidatedToken();
+        $userFromToken = $this->jwtTokenService->getUserFromToken($lastValidatedToken);
+
+        $this->assertEquals($user->id, $userFromToken->id);
+    }
 }

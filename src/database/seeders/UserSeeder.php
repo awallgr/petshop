@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use App\Models\User;
+use Faker\Factory as Faker;
+use DB;
 
 class UserSeeder extends Seeder
 {
@@ -15,6 +17,8 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        $faker = Faker::create();
+
         User::create(
             [
                 'name' => 'Admin',
@@ -24,5 +28,14 @@ class UserSeeder extends Seeder
                 'is_admin' => 1
             ]
         );
+
+        foreach (range(1, 10) as $index) {
+            User::create([
+                'name' => $faker->name,
+                'uuid' => Str::uuid(),
+                'email' => $faker->unique()->safeEmail,
+                'password' => bcrypt('userpassword'),
+            ]);
+        }
     }
 }

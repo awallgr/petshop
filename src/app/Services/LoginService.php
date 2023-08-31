@@ -38,19 +38,13 @@ class LoginService
         return response()->fail('Failed to authenticate user', 422);
     }
 
-    /**
-     * @param \Illuminate\Contracts\Auth\Authenticatable|null $user
-     */
     private function revokeExistingToken(?Authenticatable $user): void
     {
         $token = optional($user)->jwtToken;
         optional($token)->delete();
     }
 
-    /**
-     * @param \Illuminate\Contracts\Auth\Authenticatable|null $user
-     */
-    private function successAuthentication($user): JsonResponse
+    private function successAuthentication(?Authenticatable $user): JsonResponse
     {
         $token = $this->jwtTokenService->generateToken($user, "Authorize JWT Token")->token_data;
         return response()->success(['token' => $token]);

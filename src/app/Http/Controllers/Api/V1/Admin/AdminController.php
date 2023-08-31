@@ -3,12 +3,18 @@
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use Illuminate\Support\Facades\Log;
+use Illuminate\Pagination\LengthAwarePaginator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use OpenApi\Annotations as OA;
 use App\Services\LoginService;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\UserListingRequest;
+use App\Http\Resources\UserResourceCollection;
+use App\Contracts\UserRepositoryContract;
+use App\Models\User;
+use Auth;
 
 class AdminController extends Controller
 {
@@ -62,5 +68,56 @@ class AdminController extends Controller
     public function login(LoginRequest $request, LoginService $loginService): JsonResponse
     {
         return $loginService->login($request);
+    }
+
+    /**
+     * @OA\Get(
+     *      path="/api/v1/admin/user-listing",
+     *      operationId="adminShowUsers",
+     *      tags={"Admin"},
+     *      summary="List all users",
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Parameter(
+     *         name="limit",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Parameter(
+     *         name="email",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="OK",
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthorized",
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Page not found",
+     *      ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Unprocessable Entity"
+     *      ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="Internal server error"
+     *      )
+     * )
+     */
+    public function userListing(UserListingRequest $request, UserRepositoryContract $userRepository): JsonResponse
+    {
+        $user = Auth::User();
+        if (!$user || $user->cannot('userListing', User::class)) {
+            return response()->fail('Unauthorized', 401);
+        }
+        $users = $userRepository->getAllUsers((array) $request->query());
+        return (new UserResourceCollection($users))->toResponse($request);
     }
 }

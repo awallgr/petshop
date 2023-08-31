@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\ServiceProvider;
+use App\Contracts\UserRepositoryContract;
+use App\Repositories\UserRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -39,5 +41,6 @@ class AppServiceProvider extends ServiceProvider
                 'trace' => []
             ], $code);
         });
+        $this->app->bind(UserRepositoryContract::class, UserRepository::class);
     }
 }
