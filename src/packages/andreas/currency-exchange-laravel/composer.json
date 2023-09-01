@@ -1,0 +1,25 @@
+{
+    "name": "andreas/currency-exchange-laravel",
+    "description": "Currency exchange package for laravel",
+    "authors": [
+        {
+            "name": "Andreas",
+            "email": "andreasforhire@gmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Andreas\\CurrencyExchange\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Andreas\\CurrencyExchange\\CurrencyExchangeProvider"
+            ]
+        }
+    }
+}
