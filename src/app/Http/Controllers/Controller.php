@@ -26,6 +26,11 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
      *     description="User API endpoint"
      * )
      *
+     * @OA\Tag(
+     *     name="CurrencyExchange",
+     *     description="Currency Exchange API endpoint"
+     * )
+     *
      * @OA\SecurityScheme(
      *      securityScheme="bearerAuth",
      *      in="header",

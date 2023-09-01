@@ -8,6 +8,9 @@ parameters:
         - config/
         - resources/
         - routes/
+        - packages/andreas/currency-exchange-laravel/src
+    excludePaths:
+        - packages/andreas/currency-exchange-laravel/src/Tests
 
     # Level 9 is the highest level
     level: 8
