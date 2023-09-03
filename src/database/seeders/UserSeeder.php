@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use App\Models\User;
 use Faker\Factory as Faker;
-use DB;
 
 class UserSeeder extends Seeder
 {

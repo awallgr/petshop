@@ -111,7 +111,7 @@ class AdminTest extends TestCase
         $this->assertTrue(isset($response['links']));
 
         $users = $response['data'];
-        $this->assertEquals(10, count($users));
+        $this->assertEquals(11, count($users));
     }
 
     public function testAdminUserListingLimitQuery()

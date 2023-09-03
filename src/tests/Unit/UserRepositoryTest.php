@@ -18,6 +18,6 @@ class UserRepositoryTest extends TestCase
         $users = $userRepository->getAllUsers();
 
         $this->assertInstanceOf(LengthAwarePaginator::class, $users);
-        $this->assertEquals(10, $users->total());
+        $this->assertEquals(11, $users->total());
     }
 }
