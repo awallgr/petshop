@@ -32,6 +32,11 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
      * )
      *
      * @OA\Tag(
+     *     name="OrderStatuses",
+     *     description="Order Statuses API endpoint"
+     * )
+     *
+     * @OA\Tag(
      *     name="CurrencyExchange",
      *     description="Currency Exchange API endpoint"
      * )

@@ -174,4 +174,14 @@ class OrderTest extends TestCase
 
         $this->assertTrue(Order::where('uuid', '=', $orderUuid)->exists());
     }
+
+
+
+    public function testGetOrderStatuses()
+    {
+        $result = $this->get('/api/v1/order-statuses')->assertStatus(200);
+        $response = json_decode($result->getContent(), true);
+        $order_statuses = $response['data'];
+        $this->assertEquals(5, count($order_statuses));
+    }
 }

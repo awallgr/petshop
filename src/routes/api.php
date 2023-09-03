@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\Admin\AdminController;
 use App\Http\Controllers\Api\V1\User\UserController;
 use App\Http\Controllers\Api\V1\Order\OrderController;
+use App\Http\Controllers\Api\V1\Order\OrderStatusController;
 
 Route::prefix('v1')->group(function () {
     Route::prefix('admin')->name('admin.')->group(function () {
@@ -20,6 +21,10 @@ Route::prefix('v1')->group(function () {
 
     Route::controller(OrderController::class)->group(function () {
         Route::get('/orders', 'index')->name('orders')->middleware('validate-jwt-token');
+    });
+
+    Route::controller(OrderStatusController::class)->group(function () {
+        Route::get('/order-statuses', 'index')->name('order_status');
     });
 
     Route::prefix('order')->middleware('validate-jwt-token')->name('order.')->group(function () {
