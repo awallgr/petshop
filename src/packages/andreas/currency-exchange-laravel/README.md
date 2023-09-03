@@ -30,7 +30,7 @@ composer update
 
 Publish the config file:
 ```bash
-php artisan vendor:publish --provider="Andreas\CurrencyExchange\CurrencyExchangeServiceProvider" --tag=config
+php artisan vendor:publish --provider="Andreas\CurrencyExchange\CurrencyExchangeProvider" --tag=config
 ```
 
 ## Usage

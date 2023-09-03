@@ -30,7 +30,7 @@ class CurrencyExchangeProvider extends ServiceProvider
         });
         $this->loadRoutesFrom(__DIR__ . '/routes.php');
         $this->publishes([
-            __DIR__.'/config/currency_exchange.php' => config_path('currency_exchange.php'),
+            __DIR__ . '/config/currency_exchange.php' => config_path('currency_exchange.php'),
         ], 'config');
     }
 }
