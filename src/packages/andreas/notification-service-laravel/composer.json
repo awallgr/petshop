@@ -1,0 +1,25 @@
+{
+    "name": "andreas/notification-service-laravel",
+    "description": "Simple laravel package for notifications to MS Teams webhook",
+    "authors": [
+        {
+            "name": "Andreas",
+            "email": "andreasforhire@gmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Andreas\\NotificationService\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Andreas\\NotificationService\\NotificationServiceProvider"
+            ]
+        }
+    }
+}
