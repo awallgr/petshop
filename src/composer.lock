@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9c50d0d8d7bc3915b6ec5830226ba27c",
+    "content-hash": "8ceb2a534f93a5e1932148e8f7332507",
     "packages": [
         {
             "name": "andreas/currency-exchange-laravel",
@@ -37,6 +37,42 @@
                 }
             ],
             "description": "Currency exchange package for laravel",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "andreas/notification-service-laravel",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "packages/andreas/notification-service-laravel",
+                "reference": "d087b9816ce0c76bf5b730eb71e989c85eb7778f"
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.8"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Andreas\\NotificationService\\NotificationServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Andreas\\NotificationService\\": "src/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Andreas",
+                    "email": "andreasforhire@gmail.com"
+                }
+            ],
+            "description": "Simple laravel package for notifications to MS Teams webhook",
             "transport-options": {
                 "symlink": true,
                 "relative": true
@@ -10377,7 +10413,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "andreas/currency-exchange-laravel": 20
+        "andreas/currency-exchange-laravel": 20,
+        "andreas/notification-service-laravel": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

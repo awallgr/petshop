@@ -9,8 +9,10 @@ parameters:
         - resources/
         - routes/
         - packages/andreas/currency-exchange-laravel/src
+        - packages/andreas/notification-service-laravel/src
     excludePaths:
         - packages/andreas/currency-exchange-laravel/src/Tests
+        - packages/andreas/notification-service-laravel/src/Tests
 
     # Level 9 is the highest level
     level: 8

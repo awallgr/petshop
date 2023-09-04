@@ -11,6 +11,7 @@ use App\Http\Requests\CreateOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order;
 use Illuminate\Http\JsonResponse;
+use Andreas\NotificationService\Events\OrderStatusUpdatedEvent;
 
 class OrderService
 {
@@ -21,33 +22,30 @@ class OrderService
         $this->repository = $repository;
     }
 
-    private function authenticateUser(): Authenticatable
-    {
-        $user = Auth::user();
-        assert($user instanceof Authenticatable);
-        return $user;
-    }
-
     public function getAllOrders(Request $request): JsonResponse
     {
-        $user = $this->authenticateUser();
+        /** @var Authenticatable $user */
+        $user = Auth::User();
         return (new OrderResourceCollection($this->repository->getAllOrders($user)))->toResponse($request);
     }
 
     public function createOrder(CreateOrderRequest $request): JsonResponse
     {
-        $user = $this->authenticateUser();
+        /** @var Authenticatable $user */
+        $user = Auth::User();
         if ($user->cannot('store', Order::class)) {
             return response()->fail("Can't create order", 403);
         }
         $order = $this->repository->create($user, $request->all());
+        $this->sendOrderUpdateEvent($order);
         return response()->success($order->toArray());
     }
 
     public function getOrder(string $uuid): JsonResponse
     {
         try {
-            $user = $this->authenticateUser();
+            /** @var Authenticatable $user */
+            $user = Auth::User();
             $order = $this->repository->find($uuid);
             return ($order != null && $user->can('show', $order)) ?
                 response()->success($order->toArray()) :
@@ -60,9 +58,11 @@ class OrderService
     public function updateOrder(string $uuid, UpdateOrderRequest $request): JsonResponse
     {
         try {
-            $user = $this->authenticateUser();
+            /** @var Authenticatable $user */
+            $user = Auth::User();
             $order = $this->repository->find($uuid);
             if ($user->can('update', $order) && $this->repository->update($uuid, $request->all())) {
+                $this->sendOrderUpdateEvent($order);
                 return response()->success(['message' => 'Order updated']);
             }
             return response()->fail('Order could not be updated');
@@ -74,7 +74,8 @@ class OrderService
     public function deleteOrder(string $uuid): JsonResponse
     {
         try {
-            $user = $this->authenticateUser();
+            /** @var Authenticatable $user */
+            $user = Auth::User();
             $order = $this->repository->find($uuid);
             if ($user->can('delete', $order) && $this->repository->delete($uuid)) {
                 return response()->success(['message' => 'Order deleted']);
@@ -83,5 +84,16 @@ class OrderService
         } catch (\Exception $e) {
             return response()->fail('Order not found', 422);
         }
+    }
+
+    private function sendOrderUpdateEvent(Order $order): void
+    {
+        $order->refresh();
+        $event = new OrderStatusUpdatedEvent(
+            $order->uuid,
+            optional($order->status)->title,
+            optional($order->updated_at)->format("Y-m-d H:i:s")
+        );
+        event($event);
     }
 }

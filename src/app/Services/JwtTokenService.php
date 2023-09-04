@@ -44,7 +44,7 @@ class JwtTokenService
 
     public function getUserFromToken(Token $token): User|null
     {
-        assert($token instanceof UnencryptedToken);
+        /** @var UnencryptedToken $token */
         $userUuid = $token->claims()->get('user_uuid');
         return User::where('uuid', '=', $userUuid)->first();
     }

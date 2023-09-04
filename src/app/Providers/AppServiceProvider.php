@@ -23,6 +23,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->registerMacros();
+        $this->app->bind(UserRepositoryContract::class, UserRepository::class);
+    }
+
+    public function registerMacros(): void
+    {
         Response::macro('success', function (array $data = [], $code = 200): JsonResponse {
             return response()->json([
                 'success' => 1,
@@ -41,6 +47,5 @@ class AppServiceProvider extends ServiceProvider
                 'trace' => []
             ], $code);
         });
-        $this->app->bind(UserRepositoryContract::class, UserRepository::class);
     }
 }

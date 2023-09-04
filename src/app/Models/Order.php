@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Order extends Model
 {
@@ -23,4 +24,12 @@ class Order extends Model
         'delivery_fee',
         'amount',
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<OrderStatus, Order>
+     */
+    public function status()
+    {
+        return $this->belongsTo('App\Models\OrderStatus', 'order_status_id');
+    }
 }
