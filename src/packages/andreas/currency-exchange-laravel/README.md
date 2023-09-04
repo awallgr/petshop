@@ -89,7 +89,7 @@ It returns a `JsonResponse`.
 
 ## Configuration
 
-You can set the default currency and cache duration (hours) in the published config file `config/currency-exchange.php`.
+You can set the default currency and cache duration (hours) in the published config file `config/currency_exchange.php`.
 
 ## Testing
 
