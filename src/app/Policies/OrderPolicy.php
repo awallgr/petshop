@@ -10,6 +10,11 @@ class OrderPolicy
 {
     use HandlesAuthorization;
 
+    public function before(User $user, string $ability): bool|null
+    {
+        return $user->is_admin ? true : null;
+    }
+
     public function store(): bool
     {
         return true;
