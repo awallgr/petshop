@@ -2,12 +2,10 @@
 
 namespace Andreas\CurrencyExchange\Services;
 
-use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
+use GuzzleHttp\Client;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
-use Carbon\Carbon;
 
 class CurrencyExchangeService
 {
@@ -62,11 +60,10 @@ class CurrencyExchangeService
     private function getRate(string $currency, array $rates): float
     {
         if (!array_key_exists($currency, $rates)) {
-            throw new \Exception("Rate for currency $currency not found");
+            throw new \Exception("Rate for currency {$currency} not found");
         }
         return floatval($rates[$currency]);
     }
-
 
     private function convertAmount(float $amount, float $rate): float
     {
@@ -104,8 +101,8 @@ class CurrencyExchangeService
 
         $rates = [];
         foreach ($rateNodes as $rateNode) {
-            $currency = (string)$rateNode['currency'];
-            $rate = (string)$rateNode['rate'];
+            $currency = (string) $rateNode['currency'];
+            $rate = (string) $rateNode['rate'];
             $rates[$currency] = $rate;
         }
         return $rates;

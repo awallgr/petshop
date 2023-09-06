@@ -2,9 +2,9 @@
 
 namespace App\Contracts;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Pagination\LengthAwarePaginator;
 use App\Models\Order;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 interface OrderRepositoryContract
 {

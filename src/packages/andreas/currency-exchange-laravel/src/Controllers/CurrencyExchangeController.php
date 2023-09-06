@@ -2,10 +2,8 @@
 
 namespace Andreas\CurrencyExchange\Controllers;
 
-use Illuminate\Support\Facades\Log;
-use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Controller;
 use Andreas\CurrencyExchange\Requests\CurrencyExchangeRequest;
 use Andreas\CurrencyExchange\Services\CurrencyExchangeService;
 

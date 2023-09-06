@@ -2,8 +2,8 @@
 
 namespace App\Contracts;
 
-use Illuminate\Pagination\LengthAwarePaginator;
 use App\Models\User;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 interface UserRepositoryContract
 {

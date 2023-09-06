@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Api\V1\Admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\JsonResponse;
-use OpenApi\Annotations as OA;
+use Auth;
+use App\Models\User;
 use App\Services\LoginService;
+use OpenApi\Annotations as OA;
+use Illuminate\Http\JsonResponse;
 use App\Http\Requests\LoginRequest;
+use App\Http\Controllers\Controller;
+use App\Contracts\UserRepositoryContract;
 use App\Http\Requests\UserListingRequest;
 use App\Http\Resources\UserResourceCollection;
-use App\Contracts\UserRepositoryContract;
-use App\Models\User;
-use Auth;
 
 class AdminController extends Controller
 {

@@ -2,10 +2,8 @@
 
 namespace Andreas\NotificationService;
 
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\ServiceProvider;
 
 class NotificationServiceProvider extends ServiceProvider
 {

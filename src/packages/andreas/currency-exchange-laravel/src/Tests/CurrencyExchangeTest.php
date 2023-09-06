@@ -4,7 +4,6 @@ namespace Andreas\CurrencyExchange\Tests;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
 use Andreas\CurrencyExchange\Services\CurrencyExchangeService;
 use Carbon\Carbon;

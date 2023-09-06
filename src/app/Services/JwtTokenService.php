@@ -2,25 +2,22 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
-use Illuminate\Contracts\Auth\Authenticatable;
-use Lcobucci\JWT\UnencryptedToken;
-use Lcobucci\JWT\Token\Builder;
-use Lcobucci\JWT\Token\Parser;
+use Carbon\Carbon;
+use App\Models\User;
 use Lcobucci\JWT\Token;
+use App\Models\JwtToken;
+use Illuminate\Support\Str;
+use Lcobucci\JWT\Token\Parser;
+use Lcobucci\JWT\Token\Builder;
+use Lcobucci\JWT\UnencryptedToken;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
 use Lcobucci\JWT\Signer\Key\InMemory;
-use Lcobucci\JWT\Encoding\{ChainedFormatter,JoseEncoder};
-use Lcobucci\JWT\Validation\Validator as JWTValidator;
-use Lcobucci\JWT\Validation\Constraint\SignedWith;
+use Lcobucci\JWT\Encoding\JoseEncoder;
+use Lcobucci\JWT\Encoding\ChainedFormatter;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Lcobucci\JWT\Validation\Constraint\IssuedBy;
-use Lcobucci\JWT\Validation\Constraint\RelatedTo;
-use Lcobucci\JWT\Validation\Constraint\HasClaimWithValue;
-use App\Models\User;
-use App\Models\JwtToken;
-use Auth;
-use Carbon\Carbon;
+use Lcobucci\JWT\Validation\Constraint\SignedWith;
+use Lcobucci\JWT\Validation\Validator as JWTValidator;
 
 class JwtTokenService
 {
@@ -44,7 +41,7 @@ class JwtTokenService
 
     public function getUserFromToken(Token $token): User|null
     {
-        /** @var UnencryptedToken $token */
+        assert($token instanceof UnencryptedToken);
         $userUuid = $token->claims()->get('user_uuid');
         return User::where('uuid', '=', $userUuid)->first();
     }
@@ -128,7 +125,6 @@ class JwtTokenService
         $jwtToken = $user->jwtToken;
         return $jwtToken && ($jwtToken->expires_at && !Carbon::parse($jwtToken->expires_at)->isPast());
     }
-
 
     private function getKey(string $filename): InMemory
     {

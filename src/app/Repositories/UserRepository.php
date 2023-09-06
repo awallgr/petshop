@@ -2,9 +2,9 @@
 
 namespace App\Repositories;
 
-use Illuminate\Pagination\LengthAwarePaginator;
-use App\Contracts\UserRepositoryContract;
 use App\Models\User;
+use App\Contracts\UserRepositoryContract;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class UserRepository implements UserRepositoryContract
 {

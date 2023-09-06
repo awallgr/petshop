@@ -3,8 +3,8 @@
 namespace Andreas\CurrencyExchange;
 
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Response;
 
 class CurrencyExchangeProvider extends ServiceProvider
 {
@@ -25,16 +25,16 @@ class CurrencyExchangeProvider extends ServiceProvider
                 'data' => $data,
                 'error' => null,
                 'errors' => [],
-                'trace' => []
+                'trace' => [],
             ], $code);
         });
-        Response::macro('fail', function (string $message = null, $code = 422): JsonResponse {
+        Response::macro('fail', function (string $message = "", $code = 422): JsonResponse {
             return response()->json([
                 'success' => 0,
                 'data' => [],
                 'error' => $message,
                 'errors' => [],
-                'trace' => []
+                'trace' => [],
             ], $code);
         });
     }

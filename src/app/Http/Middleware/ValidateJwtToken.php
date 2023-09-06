@@ -2,12 +2,12 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
-use App\Services\JwtTokenService;
-use Lcobucci\JWT\Token;
 use Auth;
+use Closure;
+use Lcobucci\JWT\Token;
+use Illuminate\Http\Request;
+use App\Services\JwtTokenService;
+use Symfony\Component\HttpFoundation\Response;
 
 class ValidateJwtToken
 {

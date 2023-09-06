@@ -2,13 +2,12 @@
 
 namespace App\Repositories;
 
-use Illuminate\Pagination\LengthAwarePaginator;
-use App\Contracts\OrderRepositoryContract;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Support\Str;
-use App\Models\User;
 use App\Models\Order;
 use App\Models\OrderStatus;
+use Illuminate\Support\Str;
+use App\Contracts\OrderRepositoryContract;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class OrderRepository implements OrderRepositoryContract
 {

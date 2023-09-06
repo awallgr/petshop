@@ -2,7 +2,6 @@
 
 namespace Andreas\NotificationService\Tests;
 
-use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
 use Andreas\NotificationService\Events\OrderStatusUpdatedEvent;
 use Andreas\NotificationService\Listeners\SendOrderStatusToTeamsListener;

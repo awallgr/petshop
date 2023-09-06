@@ -2,15 +2,15 @@
 
 namespace App\Policies;
 
-use App\Models\Order;
 use App\Models\User;
+use App\Models\Order;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class OrderPolicy
 {
     use HandlesAuthorization;
 
-    public function store(User $user): bool
+    public function store(): bool
     {
         return true;
     }

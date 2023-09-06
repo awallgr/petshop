@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api\V1\Order;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\OrderStatusResourceCollection;
+use App\Models\OrderStatus;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use App\Models\OrderStatus;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\OrderStatusResourceCollection;
 
 class OrderStatusController extends Controller
 {

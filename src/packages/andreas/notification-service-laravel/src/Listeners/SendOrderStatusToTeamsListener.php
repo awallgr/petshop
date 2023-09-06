@@ -2,9 +2,7 @@
 
 namespace Andreas\NotificationService\Listeners;
 
-use Illuminate\Support\Facades\Log;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
 use Andreas\NotificationService\Events\OrderStatusUpdatedEvent;
 
 class SendOrderStatusToTeamsListener
@@ -24,11 +22,11 @@ class SendOrderStatusToTeamsListener
             'message' => 'Order Updated',
             'order_uuid' => $event->orderUuid,
             'new_status' => $event->newStatus,
-            'timestamp' => $event->timestamp
+            'timestamp' => $event->timestamp,
         ];
 
-        $response = $this->client->post($this->webhookUrl, [
-            'json' => $payload
+        $this->client->post($this->webhookUrl, [
+            'json' => $payload,
         ]);
     }
 }

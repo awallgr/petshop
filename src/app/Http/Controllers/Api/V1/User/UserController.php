@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1\User;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\JsonResponse;
 use App\Services\LoginService;
+use Illuminate\Http\JsonResponse;
 use App\Http\Requests\LoginRequest;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
