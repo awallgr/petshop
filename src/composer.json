@@ -17,6 +17,13 @@
             "options": {
                 "symlink": true
             }
+        },
+        "statemachine-laravel": {
+            "type": "path",
+            "url": "packages/andreas/statemachine-laravel",
+            "options": {
+                "symlink": true
+            }
         }
     },
     "license": "MIT",
@@ -29,7 +36,8 @@
         "laravel/tinker": "^2.8",
         "lcobucci/jwt": "^5.0",
         "andreas/currency-exchange-laravel": "@dev",
-        "andreas/notification-service-laravel": "@dev"
+        "andreas/notification-service-laravel": "@dev",
+        "andreas/statemachine-laravel": "@dev"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

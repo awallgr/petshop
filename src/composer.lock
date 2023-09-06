@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8ceb2a534f93a5e1932148e8f7332507",
+    "content-hash": "5a329052d64df0e41e6a356da907c243",
     "packages": [
         {
             "name": "andreas/currency-exchange-laravel",
@@ -73,6 +73,39 @@
                 }
             ],
             "description": "Simple laravel package for notifications to MS Teams webhook",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "andreas/statemachine-laravel",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "packages/andreas/statemachine-laravel",
+                "reference": "dec365eef5a3c0cbf229e3f8b414499cb1f27f79"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Andreas\\StateMachine\\StateMachineServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Andreas\\StateMachine\\": "src/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Andreas",
+                    "email": "andreasforhire@gmail.com"
+                }
+            ],
+            "description": "A simple laravel package to handle Orders in a Statemachine",
             "transport-options": {
                 "symlink": true,
                 "relative": true
@@ -6677,16 +6710,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.25.0",
+            "version": "v3.25.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "9025b7d2b6e1d90a63d0ac0905018ce5d03ec88d"
+                "reference": "8e21d69801de6b5ecb0dbe0bcdf967b335b1260b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/9025b7d2b6e1d90a63d0ac0905018ce5d03ec88d",
-                "reference": "9025b7d2b6e1d90a63d0ac0905018ce5d03ec88d",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/8e21d69801de6b5ecb0dbe0bcdf967b335b1260b",
+                "reference": "8e21d69801de6b5ecb0dbe0bcdf967b335b1260b",
                 "shasum": ""
             },
             "require": {
@@ -6760,7 +6793,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.25.0"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.25.1"
             },
             "funding": [
                 {
@@ -6768,7 +6801,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-08-31T21:27:18+00:00"
+            "time": "2023-09-04T01:22:52+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",
@@ -10414,7 +10447,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "andreas/currency-exchange-laravel": 20,
-        "andreas/notification-service-laravel": 20
+        "andreas/notification-service-laravel": 20,
+        "andreas/statemachine-laravel": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

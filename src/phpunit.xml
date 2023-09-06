@@ -17,6 +17,9 @@
         <testsuite name="NotificationService">
             <directory>packages/andreas/notification-service-laravel/src/Tests</directory>
         </testsuite>
+        <testsuite name="StateMachine">
+            <directory>packages/andreas/statemachine-laravel/src/Tests</directory>
+        </testsuite>
     </testsuites>
     <source>
         <include>

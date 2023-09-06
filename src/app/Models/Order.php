@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Andreas\StateMachine\Traits\HasStateMachine;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
 {
     use HasFactory;
+    use HasStateMachine;
 
     /**
      * The attributes that are mass assignable.
@@ -26,7 +28,7 @@ class Order extends Model
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<OrderStatus, Order>
+     * @return BelongsTo<OrderStatus, Order>
      */
     public function status()
     {

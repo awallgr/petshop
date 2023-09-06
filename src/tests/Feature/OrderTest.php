@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Support\Facades\Log;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Auth;
@@ -112,6 +111,8 @@ class OrderTest extends TestCase
         $orderStatus = OrderStatus::where('title', '=', 'open')->first();
         $nextOrderStatus = OrderStatus::where('title', '=', 'pending payment')->first();
         $order = Order::factory()->create(['user_id' => $user->id, 'order_status_id' => $orderStatus->id]);
+        $order->initializeStateMachine();
+        $order->changeCurrentStateFromName($order->status->title);
 
         $this->jwtTokenService->generateToken($user, 'test token');
 
@@ -124,6 +125,27 @@ class OrderTest extends TestCase
         $this->assertEquals($nextOrderStatus->id, $order->order_status_id);
     }
 
+    public function testUpdateOrderPaidToShipped()
+    {
+        $user = User::factory()->create();
+        $orderStatus = OrderStatus::where('title', '=', 'paid')->first();
+        $nextOrderStatus = OrderStatus::where('title', '=', 'shipped')->first();
+        $order = Order::factory()->create(['user_id' => $user->id, 'order_status_id' => $orderStatus->id]);
+        $order->initializeStateMachine();
+        $order->changeCurrentStateFromName($order->status->title);
+
+        $this->jwtTokenService->generateToken($user, 'test token');
+
+        $headers = ['Authorization' => $user->jwtToken->token_data];
+        $result = $this->withHeaders($headers)->put('/api/v1/order/' . $order->uuid, [
+            'order_status_uuid' => $nextOrderStatus->uuid,
+        ])->assertStatus(200);
+
+        $order->refresh();
+        $this->assertEquals($nextOrderStatus->id, $order->order_status_id);
+    }
+
+
     public function testUpdateOtherOrderFail()
     {
         $user = User::factory()->create();
@@ -131,6 +153,8 @@ class OrderTest extends TestCase
         $orderStatus = OrderStatus::where('title', '=', 'open')->first();
         $nextOrderStatus = OrderStatus::where('title', '=', 'pending payment')->first();
         $order = Order::factory()->create(['user_id' => $otherUser->id, 'order_status_id' => $orderStatus->id]);
+        $order->initializeStateMachine();
+        $order->changeCurrentStateFromName($order->status->title);
 
         $this->jwtTokenService->generateToken($user, 'test token');
 

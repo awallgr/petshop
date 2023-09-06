@@ -2,18 +2,12 @@
 
 namespace App\Http\Controllers\Api\V1\Order;
 
-use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
+use App\Services\OrderService;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Repositories\OrderRepository;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Http\Resources\OrderResourceCollection;
 use App\Http\Requests\CreateOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
-use App\Models\Order;
-use App\Services\OrderService;
-use Auth;
 
 class OrderController extends Controller
 {
@@ -238,5 +232,85 @@ class OrderController extends Controller
     public function delete(string $uuid): JsonResponse
     {
         return $this->service->deleteOrder($uuid);
+    }
+
+    /**
+     * @OA\Get(
+     *      path="/api/v1/order/current-state/{uuid}",
+     *      operationId="getOrderCurrentState",
+     *      tags={"Orders"},
+     *      summary="Fetch current state of Order",
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Parameter(
+     *         name="uuid",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="OK",
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthorized",
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Page not found",
+     *      ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Unprocessable Entity"
+     *      ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="Internal server error"
+     *      )
+     * )
+     */
+    public function currentState(string $uuid): JsonResponse
+    {
+        return $this->service->getCurrentStateOfOrder($uuid);
+    }
+
+    /**
+     * @OA\Get(
+     *      path="/api/v1/order/available-states/{uuid}",
+     *      operationId="getOrderAvailableStates",
+     *      tags={"Orders"},
+     *      summary="Fetch available states of Order",
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Parameter(
+     *         name="uuid",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="OK",
+     *       ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthorized",
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Page not found",
+     *      ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Unprocessable Entity"
+     *      ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="Internal server error"
+     *      )
+     * )
+     */
+    public function availableStates(string $uuid): JsonResponse
+    {
+        return $this->service->getAvailableStatesOfOrder($uuid);
     }
 }

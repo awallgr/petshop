@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\V1\Admin\AdminController;
 use App\Http\Controllers\Api\V1\User\UserController;
+use App\Http\Controllers\Api\V1\Admin\AdminController;
 use App\Http\Controllers\Api\V1\Order\OrderController;
 use App\Http\Controllers\Api\V1\Order\OrderStatusController;
 
@@ -33,6 +33,9 @@ Route::prefix('v1')->group(function () {
             Route::get('/{uuid}', 'show')->name('show');
             Route::put('/{uuid}', 'update')->name('update');
             Route::delete('/{uuid}', 'delete')->name('delete');
+
+            Route::get('/current-state/{uuid}', 'currentState')->name('currentState');
+            Route::get('/available-states/{uuid}', 'availableStates')->name('availableStates');
         });
     });
 });
