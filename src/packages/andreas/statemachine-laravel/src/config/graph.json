@@ -1,0 +1,22 @@
+{
+    "graph": "OrderFlowGraph",
+    "property_path": "order_status_id",
+    "states": [
+        {"title": "open", "uuid": "5502113d-4754-443a-af26-aa354fc85655", "initial": true},
+        {"title": "pending payment", "uuid": "72d98b11-dd7a-486d-9c2d-b55619b8ba67"},
+        {"title": "paid", "uuid": "05299896-d5d9-4913-b1ac-997714175015"},
+        {"title": "shipped", "uuid": "c54c1ecc-1528-4b71-a4bd-b8cc2e29db5e"},
+        {"title": "cancelled", "uuid": "b2996ebf-a7fe-4834-bf4a-b1686da28a45"}
+    ],
+    "transitions": {
+        "payment_start": [
+            {"from": "open", "to": ["pending payment"]}
+        ],
+        "payment_updated": [
+            {"from": "pending payment", "to": ["open", "paid", "cancelled"]}
+        ],
+        "product_shipped": [
+            {"from": "paid", "to": ["shipped"]}
+        ]
+    }
+}

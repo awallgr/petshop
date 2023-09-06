@@ -1,0 +1,23 @@
+{
+    "name": "andreas/statemachine-laravel",
+    "description": "A simple laravel package to handle Orders in a Statemachine",
+    "authors": [
+        {
+            "name": "Andreas",
+            "email": "andreasforhire@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Andreas\\StateMachine\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Andreas\\StateMachine\\StateMachineServiceProvider"
+            ]
+        }
+    }
+}
