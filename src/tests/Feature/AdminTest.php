@@ -26,8 +26,8 @@ class AdminTest extends TestCase
     public function testAdminLoginSuccess()
     {
         $result = $this->post('/api/v1/admin/login', [
-            'email' => 'admin@buckhill.co.uk',
-            'password' => 'admin'
+            'email' => 'test@test.com',
+            'password' => 'test1234'
         ])->assertStatus(200);
 
         $response = json_decode($result->getContent(), true);
@@ -49,7 +49,7 @@ class AdminTest extends TestCase
     public function testAdminLoginWrongPassword()
     {
         $this->post('/api/v1/admin/login', [
-            'email' => 'admin@buckhill.co.uk',
+            'email' => 'test@test.com',
             'password' => 'wrongpassword'
         ])->assertStatus(422);
     }
@@ -57,7 +57,7 @@ class AdminTest extends TestCase
     public function testAdminLoginEmptyPassword()
     {
         $this->post('/api/v1/admin/login', [
-            'email' => 'admin@buckhill.co.uk',
+            'email' => 'test@test.com',
             'password' => ''
         ])->assertStatus(422);
     }
@@ -66,7 +66,7 @@ class AdminTest extends TestCase
     {
         $this->post('/api/v1/admin/login', [
             'email' => 'admin',
-            'password' => 'admin'
+            'password' => 'test1234'
         ])->assertStatus(422);
     }
 
@@ -74,15 +74,15 @@ class AdminTest extends TestCase
     {
         $this->post('/api/v1/admin/login', [
             'email' => '',
-            'password' => 'admin'
+            'password' => 'test1234'
         ])->assertStatus(422);
     }
 
     public function testAdminLoginUnregisteredEmail()
     {
         $this->post('/api/v1/admin/login', [
-            'email' => 'unregistered@buckhill.co.uk',
-            'password' => 'admin'
+            'email' => 'wrongtest@test.com',
+            'password' => 'test1234'
         ])->assertStatus(422);
     }
 

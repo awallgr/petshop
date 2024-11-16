@@ -49,7 +49,7 @@ class UserTest extends TestCase
     {
         $user = User::factory()->create();
         $this->post('/api/v1/user/login', [
-            'email' => 'user@buckhill.co.uk',
+            'email' => 'test@test.com',
             'password' => ''
         ])->assertStatus(422);
     }
@@ -73,7 +73,7 @@ class UserTest extends TestCase
     public function testUserLoginUnregisteredEmail()
     {
         $this->post('/api/v1/user/login', [
-            'email' => 'unregistered@buckhill.co.uk',
+            'email' => 'unregistered@test.com',
             'password' => 'user'
         ])->assertStatus(422);
     }

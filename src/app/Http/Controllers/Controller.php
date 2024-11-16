@@ -11,9 +11,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
  *      version="1.0.0",
  *      title="Petshop API",
  *      description="Petshop project",
- *      @OA\Contact(
- *          email="andreasforhire@gmail.com"
- *      ),
  * )
  *
  * @OA\Tag(

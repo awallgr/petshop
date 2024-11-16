@@ -22,8 +22,8 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Admin',
                 'uuid' => Str::uuid(),
-                'email' => 'admin@buckhill.co.uk',
-                'password' => bcrypt('admin'),
+                'email' => 'test@test.com',
+                'password' => bcrypt('test1234'),
                 'is_admin' => 1
             ]
         );
@@ -33,7 +33,7 @@ class UserSeeder extends Seeder
                 'name' => $faker->name,
                 'uuid' => Str::uuid(),
                 'email' => $faker->unique()->safeEmail,
-                'password' => bcrypt('userpassword'),
+                'password' => bcrypt('test1234'),
             ]);
         }
     }

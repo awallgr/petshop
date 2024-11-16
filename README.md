@@ -1,6 +1,11 @@
 # Petshop
 
 
+### TEST DATA
+Admin: test@test.com // Password: test1234
+User: random email (get from userListing) // Password: test1234
+
+
 ### Clone project
 
 ```bash
